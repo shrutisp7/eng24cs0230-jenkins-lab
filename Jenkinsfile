@@ -25,6 +25,14 @@ pipeline {
             }
         }
 
+                stage('Docker Image') {
+            steps {
+                echo 'Building Docker image'
+                sh 'docker build -t usn-calculator:${BUILD_NUMBER} .'
+                sh 'docker tag usn-calculator:${BUILD_NUMBER} usn-calculator:latest'
+            }
+        }
+
         stage('Deploy to Staging') {
             steps {
                 input message: 'Approve deployment to staging?',
